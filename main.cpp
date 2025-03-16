@@ -1,6 +1,9 @@
 #include <iostream>
-
+#include <string>
+#include "../include/seat.h"
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Seat seat1{ "silver", false };
+    seat1.printseatinfo();
+    seat1.isreserved();
+    seat1.printseatinfo();
 }
