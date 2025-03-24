@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\show.cpp" />
     <ClCompile Include="TicketBooking.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\show.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
