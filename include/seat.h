@@ -7,4 +7,4 @@ struct Seat {
 	bool isReserved;
 	bool isreserved();
 	void printseatinfo();
-}
+};

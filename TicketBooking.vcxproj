@@ -127,11 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Hall.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\seat.cpp" />
     <ClCompile Include="src\show.cpp" />
-    <ClCompile Include="TicketBooking.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Hall.h" />
+    <ClInclude Include="include\seat.h" />
     <ClInclude Include="include\show.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

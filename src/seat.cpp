@@ -4,10 +4,8 @@
 using namespace std;
 
 
-struct Seat {
-	string seattype;
-	bool isReserved;
-	bool isreserved() {
+
+	bool seat::isreserved() {
 		if (isReserved == true) {
 			return false;
 		}
@@ -16,7 +14,7 @@ struct Seat {
 			return true;
 		}
 	}
-	void printseatinfo() {
+	void seat::printseatinfo() {
 		cout << "Seat type: " << seattype << endl << "Status: ";
 		if (isReserved == true) {
 			cout << "reserved";
@@ -25,4 +23,3 @@ struct Seat {
 			cout << "available";
 		}
 	}
-}
