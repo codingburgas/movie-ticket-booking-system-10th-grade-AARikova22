@@ -7,6 +7,6 @@ using namespace std;
 
 struct Hall {
 	int HallNumber;
-	vector<show> Shows;
+	vector<Show> shows;
 	void printallshows();
 };

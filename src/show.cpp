@@ -1,28 +1,27 @@
+
 #include <iostream>
-#include <string>
-#include <vector>
 #include "../include/show.h"
-#include "../include/seat.h"
-#include "../src/seat.cpp"
-using namespace std;
 
-	void show::printMovieInfo() {
-		cout << "Title: " << title << endl << "Time: " << time << endl;
-	}
 
-	void show::printSeatsInfo() {
-		cout << "Seats: " << endl;
-		for (int i = 0; i < Seats.size(); i++) {
-			cout << "Seat number: " << i + 1 << endl << Seats[i].printseatinfo() << endl;
-		}
-	}
+void Show::printMovieInfo() {
+    std::cout << "Title: " << title << std::endl
+        << "Time: " << time << std::endl;
+}
 
-	bool show::seatresetvation(number) {
-		if ((number >= 0) && (number < Seats.size())) {
-			Seats[number].isreserved();
-				return isreserved();
-		}
-		else {
-			return 0;
-		}
-	}
+void Show::printSeatsInfo() {
+    std::cout << "Seats:" << std::endl;
+    for (int i = 0; i < seats.size(); i++) {
+        std::cout << "Seat number: " << i + 1 << std::endl;
+        seats[i].printseatinfo();
+        std::cout << std::endl;
+    }
+}
+
+bool Show::seatReservation(int number) {
+    if ((number >= 0) && (number < seats.size())) {
+        return seats[number].isreserved(); 
+    }
+    else {
+        return false;
+    }
+}
