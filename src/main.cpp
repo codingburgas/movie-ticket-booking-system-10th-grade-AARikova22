@@ -4,6 +4,12 @@
 #include <string>
 #include "../include/seat.h"
 #include "../include/show.h"
+#include "../include/Hall.h"
+#include "../include/cinema.h"
+
+
+
+
 
 int main() {
     Show runlolarun;
@@ -18,14 +24,68 @@ int main() {
 
     runlolarun.printMovieInfo();
 
-    std::cout << "\nBefore reservation:\n";
-    runlolarun.printSeatsInfo();
+    Show whatwedointheshadows;
+    
+    whatwedointheshadows.title = "What We Do In The Shadows";
+    whatwedointheshadows.time = "17:30";
 
-    std::cout << "\nTrying to reserve seat 3:\n";
-    runlolarun.seatReservation(2); 
+    whatwedointheshadows.seats = {
+        {"silver", false},
+        {"gold", false},
+        {"platinum", false}
+    };
 
-    std::cout << "\nAfter reservation:\n";
-    runlolarun.printSeatsInfo();
+    whatwedointheshadows.printMovieInfo();
+    Show labyrinth;
+
+    labyrinth.title = "Labyrinth";
+    labyrinth.time = "19:30";
+
+    labyrinth.seats = {
+        {"silver", false},
+        {"gold", false},
+        {"platinum", false}
+    };
+
+    labyrinth.printMovieInfo();
+
+
+    
+
+ 
+
+
+    Hall Hall1;
+    Hall1.HallNumber = 1;
+    Hall1.shows = {
+        {runlolarun}
+    };
+    Hall1.printallshows();
+
+    Hall Hall2;
+    Hall2.HallNumber = 2;
+    Hall2.shows = {
+        {whatwedointheshadows}
+    };
+    Hall2.printallshows();
+
+    Hall Hall3;
+    Hall3.HallNumber = 3;
+    Hall3.shows = {
+        {labyrinth}
+    };
+    Hall3.printallshows();
+
+
+    Cinema GrandMallCinema;
+    GrandMallCinema.name = "Grand Mall Cinema";
+    GrandMallCinema.town = "Varna";
+    GrandMallCinema.halls = {
+        {1},
+        {2},
+        {3}
+    };
+
 
     return 0;
 }
