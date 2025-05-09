@@ -14,15 +14,16 @@ void Cinema::printallshowsInHalls() {
 }
 
 
-	Show* Cinema::SearchShow(string usertitle) {
+	vector <Show*> Cinema::SearchShow(string usertitle) {
 		vector<Show*> result;
 		for (int i = 0; i < halls.size(); i++) {
 			for (int j = 0; j < halls[i].shows.size(); j++) {
 				if (halls[i].shows[j].title == usertitle) {
-					result.push_back(&halls[j].shows[j]);
-					
+					result.push_back(&halls[i].shows[j]);
+
 				}
-				
+
 			}
-		
+		}
+			return result;
 	}

@@ -10,6 +10,6 @@ struct Cinema {
 	string town;
 	vector <Hall> halls;
 	void printallshowsInHalls();
-	Show* SearchShow(string usertitle);
+vector <Show*> SearchShow(string usertitle);
 	
 };

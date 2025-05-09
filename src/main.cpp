@@ -4,7 +4,7 @@
 #include "../include/show.h"
 #include "../include/Hall.h"
 #include "../include/cinema.h"
-
+using namespace std;
 int main() {
     Show runlolarun;
     runlolarun.title = "Run Lola Run";
@@ -53,6 +53,16 @@ int main() {
     };
 
     GrandMallCinema.printallshowsInHalls();
-
+    vector<Show*> results = GrandMallCinema.SearchShow("What We Do In The Shadows");
+    if (results.empty()) {
+        cout << "Not found." << endl;
+    }
+    else {
+        for (int i = 0; i < results.size(); i++) {
+            Show current = *results[i];
+           current.printMovieInfo();
+        }
+    }
+    
     return 0;
 }
