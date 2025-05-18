@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="include\cinema.h" />
     <ClInclude Include="include\Hall.h" />
+    <ClInclude Include="include\movie.h" />
     <ClInclude Include="include\seat.h" />
     <ClInclude Include="include\show.h" />
   </ItemGroup>

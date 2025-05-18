@@ -3,10 +3,11 @@
 #include <string>
 #include <vector>
 #include "../include/seat.h"
+#include "movie.h"
 using namespace std;
 
 struct Show {
-    string title;
+    Movie* title;
     string time;
     vector<Seat> seats;
 

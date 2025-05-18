@@ -53,14 +53,16 @@ int main() {
     };
 
     GrandMallCinema.printallshowsInHalls();
-    vector<Show*> results = GrandMallCinema.SearchShow("What We Do In The Shadows");
+    cout << "Search movie...🖉";
+        string usermovie;
+    cin >> usermovie;
+    vector<Show*> results = GrandMallCinema.SearchShow(usermovie);
     if (results.empty()) {
         cout << "Not found." << endl;
     }
     else {
         for (int i = 0; i < results.size(); i++) {
-            Show current = *results[i];
-           current.printMovieInfo();
+            (*results[i]).printMovieInfo();
         }
     }
     

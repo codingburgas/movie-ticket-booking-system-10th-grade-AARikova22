@@ -44,6 +44,9 @@
     <ClInclude Include="include\cinema.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\movie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
