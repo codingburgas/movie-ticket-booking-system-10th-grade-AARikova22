@@ -7,7 +7,7 @@
 using namespace std;
 
 struct Show {
-    Movie* title;
+    Movie* movie;
     string time;
     vector<Seat> seats;
 
