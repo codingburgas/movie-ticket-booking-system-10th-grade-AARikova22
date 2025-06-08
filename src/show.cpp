@@ -1,8 +1,9 @@
 
 #include <iostream>
+#include <string>
 #include "../include/show.h"
 
-
+using namespace std;
 void Show::printMovieInfo() {
     std::cout << "Title: " << movie->title << std::endl
         << "Time: " << time << std::endl;

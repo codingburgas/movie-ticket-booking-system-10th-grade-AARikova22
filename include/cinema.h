@@ -2,9 +2,15 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "hall.h"
 #include "movie.h"
 using namespace std;
+
+struct SearchResult {
+	Show* show;
+	int hallNumber;
+};
 
 struct Cinema {
 	string name;
@@ -15,7 +21,3 @@ struct Cinema {
 	vector <Movie> movies;
 };
 
-struct SearchResult {
-	Show* show;
-	int hallNumber;
-};

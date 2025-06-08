@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <cctype>
 #include "../include/cinema.h"
 #include "../include/hall.h"
 
@@ -18,16 +19,18 @@ vector<SearchResult> Cinema::SearchShow(string usertitle) {
     vector<SearchResult> result;
 
     string lower_usertitle = usertitle;
-    std::transform(lower_usertitle.begin(), lower_usertitle.end(), lower_usertitle.begin(),
-        [](unsigned char c) { return std::tolower(c); });
+    for (int i = 0; i < usertitle.size(); i++) {
+        lower_usertitle[i] = tolower(usertitle[i]);
+    }
 
     for (int i = 0; i < halls.size(); i++) {
         for (int j = 0; j < halls[i].shows.size(); j++) {
             string lower_movie_title = halls[i].shows[j].movie->title;
-            std::transform(lower_movie_title.begin(), lower_movie_title.end(), lower_movie_title.begin(),
-                [](unsigned char c) { return std::tolower(c); });
+            for (int k = 0; k < halls[i].shows[j].movie->title.size(); k++) {
+                lower_movie_title[k] = tolower(halls[i].shows[j].movie->title[k]);
+            }
 
-            if (lower_movie_title.find(lower_usertitle) != string::npos) {
+            if (lower_movie_title == lower_usertitle) {
                 SearchResult sr;
                 sr.show = &halls[i].shows[j];
                 sr.hallNumber = halls[i].HallNumber;

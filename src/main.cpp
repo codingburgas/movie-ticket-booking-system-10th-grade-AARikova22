@@ -43,15 +43,15 @@ int main() {
     } };
 
 
-    hall hall1;
+    Hall hall1;
     hall1.HallNumber = 1;
     hall1.shows = { runlolarun,nowyouseeme };
 
-    hall hall2;
+    Hall hall2;
     hall2.HallNumber = 2;
     hall2.shows = { whatwedointheshadows, thebookofgenry };
 
-    hall hall3;
+    Hall hall3;
     hall3.HallNumber = 3;
     hall3.shows = { labyrinth, coraline };
 
@@ -81,9 +81,51 @@ int main() {
             results[i].show->printMovieInfo();
             cout << "Hall number: " << results[i].hallNumber << endl;
             results[i].show->printSeatsInfo();
-            cout << endl; 
+            cout << endl;
+        }
+
+
+        char userChoice;
+        cout << "Do you want to reserve a seat? (y/n): ";
+        cin >> userChoice;
+
+        if (userChoice == 'y' || userChoice == 'Y') {
+            int showNumber = 1;
+
+            if (results.size() > 1) {
+                cout << "Enter the show number you want to book (e.g., 1): ";
+                cin >> showNumber;
+            }
+
+            if (showNumber > 0 && showNumber <= results.size()) {
+                int seatNumber;
+                cout << "Enter the seat number you wish to reserve: ";
+                cin >> seatNumber;
+
+
+                Show* selectedShow = results[showNumber - 1].show;
+
+                if (selectedShow->seatReservation(seatNumber - 1)) {
+                    cout << "\n===================================" << endl;
+                    cout << "  Seat successfully reserved!" << endl;
+                    cout << "===================================" << endl;
+
+
+                    cout << "\nUpdated seat status:" << endl;
+                    selectedShow->printSeatsInfo();
+                }
+                else {
+                    cout << "\n================================================" << endl;
+                    cout << "Failed to reserve seat. \nIt may already be taken, or the seat number is incorrect.";
+                    cout << "\n================================================" << endl;
+                }
+            }
+            else {
+                cout << "Invalid show number selected." << endl;
+            }
         }
     }
-    
-    return 0;
+
+return 0;
+
 }
