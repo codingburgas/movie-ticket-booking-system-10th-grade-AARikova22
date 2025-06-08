@@ -128,14 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\cinema.cpp" />
-    <ClCompile Include="src\Hall.cpp" />
+    <ClCompile Include="src\hall.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\seat.cpp" />
     <ClCompile Include="src\show.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\cinema.h" />
-    <ClInclude Include="include\Hall.h" />
+    <ClInclude Include="include\hall.h" />
     <ClInclude Include="include\movie.h" />
     <ClInclude Include="include\seat.h" />
     <ClInclude Include="include\show.h" />

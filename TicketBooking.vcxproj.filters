@@ -24,7 +24,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Hall.cpp">
+    <ClCompile Include="src\hall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cinema.cpp">
@@ -38,7 +38,7 @@
     <ClInclude Include="include\seat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Hall.h">
+    <ClInclude Include="include\hall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\cinema.h">

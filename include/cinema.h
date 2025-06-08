@@ -11,6 +11,11 @@ struct Cinema {
 	string town;
 	vector <Hall> halls;
 	void printallshowsInHalls();
-	vector <Show*> SearchShow(string usertitle);
+	vector <SearchResult> SearchShow(string usertitle);
 	vector <Movie> movies;
+};
+
+struct SearchResult {
+	Show* show;
+	int hallNumber;
 };

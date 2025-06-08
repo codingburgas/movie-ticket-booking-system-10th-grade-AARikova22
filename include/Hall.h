@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct Hall {
+struct hall {
 	int HallNumber;
 	vector<Show> shows;
 	void printallshows();
