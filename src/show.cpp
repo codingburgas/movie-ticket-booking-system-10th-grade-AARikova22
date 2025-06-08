@@ -4,7 +4,7 @@
 
 
 void Show::printMovieInfo() {
-    std::cout << "Title: " << title << std::endl
+    std::cout << "Title: " << movie->title << std::endl
         << "Time: " << time << std::endl;
 }
 
@@ -19,7 +19,7 @@ void Show::printSeatsInfo() {
 
 bool Show::seatReservation(int number) {
     if ((number >= 0) && (number < seats.size())) {
-        return seats[number].isreserved(); 
+        return seats[number].isreserved();
     }
     else {
         return false;

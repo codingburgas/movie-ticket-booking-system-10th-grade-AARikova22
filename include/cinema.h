@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Hall.h"
+#include "hall.h"
 #include "movie.h"
 using namespace std;
 
@@ -11,6 +11,6 @@ struct Cinema {
 	string town;
 	vector <Hall> halls;
 	void printallshowsInHalls();
-vector <Show*> SearchShow(string usertitle);
-vector <Movie> movies;
+	vector <Show*> SearchShow(string usertitle);
+	vector <Movie> movies;
 };

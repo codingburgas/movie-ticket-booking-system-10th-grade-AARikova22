@@ -1,37 +1,32 @@
 ﻿#include <iostream>
+#include <vector>
 #include <string>
-#include "../include/seat.h"
-#include "../include/show.h"
-#include "../include/Hall.h"
-#include "../include/cinema.h"
+#include <limits> 
+#include "../include/cinema.h" 
 using namespace std;
+
 int main() {
-    Show runlolarun;
-    runlolarun.title = "Run Lola Run";
-    runlolarun.time = "15:30";
-    runlolarun.seats = {
-        {"silver", false},
-        {"gold", false},
-        {"platinum", false}
-    };
 
-    Show whatwedointheshadows;
-    whatwedointheshadows.title = "What We Do In The Shadows";
-    whatwedointheshadows.time = "17:30";
-    whatwedointheshadows.seats = {
-        {"silver", false},
-        {"gold", false},
-        {"platinum", false}
-    };
+    Movie movierunlolarun = { "Run Lola Run", "English", "Thriller", "1998" };
 
-    Show labyrinth;
-    labyrinth.title = "Labyrinth";
-    labyrinth.time = "19:30";
-    labyrinth.seats = {
+    Show runlolarun = { &movierunlolarun, "15:30", { {"silver", false},
+          {"gold", false},
+          {"platinum", false} } };
+
+    Movie  moviewhatwedointheshadows = { "What We Do In The Shadows", "English", "Horror/Comedy", "2014" };
+    Show whatwedointheshadows = { &moviewhatwedointheshadows,"17:30", {
         {"silver", false},
         {"gold", false},
         {"platinum", false}
-    };
+    } };
+
+    Movie  movielabyrinth = { "Labyrinth", "Bulgarian", "Fantasy", "1986" };
+    Show labyrinth = { &movielabyrinth,"19:30", {
+        {"silver", false},
+        {"gold", false},
+        {"platinum", false}
+    } };
+
 
     Hall hall1;
     hall1.HallNumber = 1;
@@ -53,9 +48,12 @@ int main() {
     };
 
     GrandMallCinema.printallshowsInHalls();
-    cout << "Search movie...🖉";
-        string usermovie;
-    cin >> usermovie;
+
+    cout << "Search movie...";
+    string usermovie;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, usermovie);
     vector<Show*> results = GrandMallCinema.SearchShow(usermovie);
     if (results.empty()) {
         cout << "Not found." << endl;
@@ -65,6 +63,6 @@ int main() {
             (*results[i]).printMovieInfo();
         }
     }
-    
+
     return 0;
 }
