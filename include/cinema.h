@@ -17,7 +17,11 @@ struct Cinema {
 	string town;
 	vector <Hall> halls;
 	void printallshowsInHalls();
-	vector <SearchResult> SearchShow(string usertitle);
+	vector <SearchResult> SearchShowbytitle(string usertitle);
+	vector <SearchResult> SearchShowbylanguage(string userlanguage);
+	vector <SearchResult> SearchShowbygenre(string usergenre);
+	vector <SearchResult> SearchShowbyreleasedate(string userreleasedate);
 	vector <Movie> movies;
+	
 };
 

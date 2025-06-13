@@ -16,7 +16,7 @@ int main() {
 
     Show coraline = { &moviecoraline, "18:00",  {{"silver", false}, {"gold", false },{"platinum", false}} };
 
-   Movie moviethebookofgenry = { "The Book of Henry", "Bulgarian", "Drama", "2017" };
+    Movie moviethebookofgenry = { "The Book of Henry", "Bulgarian", "Drama", "2017" };
 
     Show thebookofgenry = { &moviethebookofgenry, "12:00",  {{"silver", false}, {"gold", false },{"platinum", false}} };
 
@@ -62,70 +62,120 @@ int main() {
         hall1, hall2, hall3
     };
 
+    
+    //GrandMallCinema.printallshowsInHalls();
+    int usersearchchoice;
+    cout << "Search by..." << endl << "1. Title" << endl << "2. Language" << endl << "3. Genre" << endl << "4. Realese date" << endl;
+    cin >> usersearchchoice;
 
-  //GrandMallCinema.printallshowsInHalls();
+    if (usersearchchoice == 1) {
+        cout << "Search..." << endl;
+        string usermovie;
 
-    cout << "Search movie...";
-    string usermovie;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, usermovie);
 
-  //cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    getline(cin, usermovie);
+        vector<SearchResult> results = GrandMallCinema.SearchShowbytitle(usermovie);
+        if (results.empty()) {
+            cout << "Not found." << endl;
+        }
+        else {
+            cout << "\nFound shows:" << endl;
+            for (int i = 0; i < results.size(); i++) {
+                results[i].show->printMovieInfo();
 
-    vector<SearchResult> results = GrandMallCinema.SearchShow(usermovie);
-    if (results.empty()) {
-        cout << "Not found." << endl;
+            }
+
+
+
+        }
     }
+
+    else if (usersearchchoice == 2) {
+        cout << "Search...";
+        string userlanguage;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, userlanguage);
+
+        vector<SearchResult> result = GrandMallCinema.SearchShowbylanguage(userlanguage);
+        if (result.empty()) {
+            cout << "Not found." << endl;
+        }
+
+        else {
+            cout << "\nFound shows:" << endl;
+            for (int i = 0; i < result.size(); i++) {
+                result[i].show->printMovieInfo();
+
+                cout << endl;
+            }
+        }
+
+    }
+
+
+    else if (usersearchchoice == 3) {
+
+        cout << "Search...";
+        string usergenre;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, usergenre);
+
+        vector<SearchResult> result = GrandMallCinema.SearchShowbygenre(usergenre);
+        if (result.empty()) {
+            cout << "Not found." << endl;
+        }
+
+        else {
+            cout << "\nFound shows:" << endl;
+            for (int i = 0; i < result.size(); i++) {
+                result[i].show->printMovieInfo();
+
+                cout << endl;
+            }
+        }
+
+    }
+
+    else if (usersearchchoice == 4) {
+
+
+        cout << "Search...";
+        string userreleasedate;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, userreleasedate);
+
+        vector<SearchResult> result = GrandMallCinema.SearchShowbyreleasedate(userreleasedate);
+        if (result.empty()) {
+            cout << "Not found." << endl;
+        }
+
+        else {
+            cout << "\nFound shows:" << endl;
+            for (int i = 0; i < result.size(); i++) {
+                result[i].show->printMovieInfo();
+
+                cout << endl;
+            }
+        }
+    }
+
     else {
-        cout << "\nFound shows:" << endl;
-        for (int i = 0; i < results.size(); i++) {
-            results[i].show->printMovieInfo();
-            cout << "Hall number: " << results[i].hallNumber << endl;
-            results[i].show->printSeatsInfo();
-            cout << endl;
-        }
-
-
-        char userChoice;
-        cout << "Do you want to reserve a seat? (y/n): ";
-        cin >> userChoice;
-
-        if (userChoice == 'y' || userChoice == 'Y') {
-            int showNumber = 1;
-
-            if (results.size() > 1) {
-                cout << "Enter the show number you want to book (e.g., 1): ";
-                cin >> showNumber;
-            }
-
-            if (showNumber > 0 && showNumber <= results.size()) {
-                int seatNumber;
-                cout << "Enter the seat number you wish to reserve: ";
-                cin >> seatNumber;
-
-
-                Show* selectedShow = results[showNumber - 1].show;
-
-                if (selectedShow->seatReservation(seatNumber - 1)) {
-                    cout << "\n===================================" << endl;
-                    cout << "  Seat successfully reserved!" << endl;
-                    cout << "===================================" << endl;
-
-
-                    cout << "\nUpdated seat status:" << endl;
-                    selectedShow->printSeatsInfo();
-                }
-                else {
-                    cout << "\n================================================" << endl;
-                    cout << "Failed to reserve seat. \nIt may already be taken, or the seat number is incorrect.";
-                    cout << "\n================================================" << endl;
-                }
-            }
-            else {
-                cout << "Invalid show number selected." << endl;
-            }
-        }
+        cout << "Choose another search method" << endl;
     }
-
-return 0;
 
 }
+  
+       
+
+
+
+
+
+
+
+
+
+       
+
+
