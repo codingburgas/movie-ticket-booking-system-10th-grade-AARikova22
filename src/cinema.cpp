@@ -115,3 +115,25 @@ vector <SearchResult> Cinema::SearchShowbyreleasedate(string userreleasedate) {
     }
     return results;
 }
+
+void addMovie() {
+    vector <Movie> movies;
+    Movie newMovie;
+
+    cout << "Enter movie information" << endl << "Title:" << endl;
+    getline(cin, newMovie.title);
+
+    cout << "Genre:" << endl;
+    getline(cin, newMovie.genre);
+
+    cout << "Language:" << endl;
+    getline(cin, newMovie.language);
+
+    cout << "Release date:" << endl;
+    getline(cin, newMovie.releasedate);
+
+    movies.push_back(newMovie);
+
+    cout << "New movie successfully added!" << endl;
+
+}
