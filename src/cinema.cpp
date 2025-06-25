@@ -151,11 +151,11 @@ void Cinema::deleteMovie() {
             cout << i+1 << ". " << movies[i].title << endl;
         }
         cout << "Type the number of movie you want to delete" << endl;
-        int deletemoviechoice;
+        int deletemoviechoice = deletemoviechoice - 1;
         cin >> deletemoviechoice;
         Movie* movieToDelete = &movies[deletemoviechoice-1]; 
         for (int i = 0; i < halls.size(); i++) {
-            for (int j = halls[i].shows.size(); j >= 0; j--) {
+            for (int j = halls[i].shows.size() -1; ; j >= 0; j--) {
                 if (movieToDelete == halls[i].shows[j].movie){
                    
                     halls[i].shows.erase(halls[i].shows.begin() + j);
@@ -178,7 +178,11 @@ void Cinema::addShow(){
             cout << i + 1 << ". " << movies[i].title << endl;
 
             cout << "Type the number of movie you want to select." << endl;
-            int addshow_moviechoice
+            int addshow_moviechoice = addshow_moviechoice - 1;
+                cin >> addshow_moviechoice;
+
+                for (int i = 0; i < movies.size(); i++) {
+                    cout << "Hall " << halls[i].HallNumber << endl;
         }
     cout << "Add a movie:" << endl;
     getline(cin, NewShow.movie);

@@ -9,4 +9,5 @@ struct Hall {
 	int HallNumber;
 	vector<Show> shows;
 	void printallshows();
+	
 };
