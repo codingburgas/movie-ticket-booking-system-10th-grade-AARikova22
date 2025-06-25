@@ -23,5 +23,10 @@ struct Cinema {
 	vector <SearchResult> SearchShowbyreleasedate(string userreleasedate);
 	vector <Movie> movies;
 	void addMovie();
+	void deleteMovie();
+	void addShow();
+	void deleteShow();
+	void updateShow();
+
 };
 

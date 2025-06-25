@@ -3,6 +3,7 @@
 #include <cctype>
 #include "../include/cinema.h"
 #include "../include/hall.h"
+#include "../include/show.h"
 
 using namespace std;
 
@@ -116,11 +117,13 @@ vector <SearchResult> Cinema::SearchShowbyreleasedate(string userreleasedate) {
     return results;
 }
 
-void addMovie() {
-    vector <Movie> movies;
+void Cinema::addMovie() {
+    
     Movie newMovie;
 
-    cout << "Enter movie information" << endl << "Title:" << endl;
+    cout << "Enter movie information" << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Title:" << endl;
     getline(cin, newMovie.title);
 
     cout << "Genre:" << endl;
@@ -137,3 +140,69 @@ void addMovie() {
     cout << "New movie successfully added!" << endl;
 
 }
+
+void Cinema::deleteMovie() {
+    if (movies.empty() == true) {
+        cout << "Movie list is empty." << endl;
+
+    }
+    else {
+        for (int i = 0; i < movies.size(); i++) {
+            cout << i+1 << ". " << movies[i].title << endl;
+        }
+        cout << "Type the number of movie you want to delete" << endl;
+        int deletemoviechoice;
+        cin >> deletemoviechoice;
+        Movie* movieToDelete = &movies[deletemoviechoice-1]; 
+        for (int i = 0; i < halls.size(); i++) {
+            for (int j = halls[i].shows.size(); j >= 0; j--) {
+                if (movieToDelete == halls[i].shows[j].movie){
+                   
+                    halls[i].shows.erase(halls[i].shows.begin() + j);
+                }
+            }
+        }
+        movies.erase(movies.begin() + deletemoviechoice);
+    }
+}
+
+
+void Cinema::addShow(){
+
+    if (movies.empty() == true) {
+        cout << "Movie list is empty." << endl;
+
+    }
+    else {
+        for (int i = 0; i < movies.size(); i++) {
+            cout << i + 1 << ". " << movies[i].title << endl;
+
+            cout << "Type the number of movie you want to select." << endl;
+            int addshow_moviechoice
+        }
+    cout << "Add a movie:" << endl;
+    getline(cin, NewShow.movie);
+    cout << "Time:" << endl;
+    getline(cin, NewShow.time);
+    for (int i = seats.size(); i > seats.size() / 2; --i) {
+        Seat seat;
+        seat.seattype = "silver";
+        seat.isReserved = false;
+        NewShow.seats.push_back(seat);
+    }
+    for (int i = seats.size() / 2; i > seats.size() / 4; --i) {
+        Seat seat;
+        seat.seattype = "gold";
+        seat.isReserved = false;
+        NewShow.seats.push_back(seat);
+    }
+    for (int i = seats.size() / 4; i >= 1; --i) {
+        Seat seat;
+        seat.seattype = "platinum";
+        seat.isReserved = false;
+        NewShow.seats.push_back(seat);
+    }
+    shows.push_back(NewShow);
+    cout << "New show sucessfully added!" << endl;
+}
+

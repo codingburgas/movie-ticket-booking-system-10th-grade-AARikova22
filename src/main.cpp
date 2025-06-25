@@ -63,107 +63,22 @@ int main() {
     };
 
     
-    //GrandMallCinema.printallshowsInHalls();
-    int usersearchchoice;
-    cout << "Search by..." << endl << "1. Title" << endl << "2. Language" << endl << "3. Genre" << endl << "4. Realese date" << endl;
-    cin >> usersearchchoice;
+    GrandMallCinema.printallshowsInHalls();
+   
 
-    if (usersearchchoice == 1) {
-        cout << "Search..." << endl;
-        string usermovie;
-
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, usermovie);
-
-        vector<SearchResult> results = GrandMallCinema.SearchShowbytitle(usermovie);
-        if (results.empty()) {
-            cout << "Not found." << endl;
-        }
-        else {
-            cout << "\nFound shows:" << endl;
-            for (int i = 0; i < results.size(); i++) {
-                results[i].show->printMovieInfo();
-
-            }
-
-
-
-        }
+    cout << "Do you want to add a movie? (y/n)" << endl;
+    char usernewmoviechoice;
+    cin >> usernewmoviechoice;
+    if (usernewmoviechoice == 'n') {
+        cout << "Back to the menu." << endl;
     }
-
-    else if (usersearchchoice == 2) {
-        cout << "Search...";
-        string userlanguage;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, userlanguage);
-
-        vector<SearchResult> result = GrandMallCinema.SearchShowbylanguage(userlanguage);
-        if (result.empty()) {
-            cout << "Not found." << endl;
-        }
-
-        else {
-            cout << "\nFound shows:" << endl;
-            for (int i = 0; i < result.size(); i++) {
-                result[i].show->printMovieInfo();
-
-                cout << endl;
-            }
-        }
-
+    else if (usernewmoviechoice == 'y') {
+        GrandMallCinema.addMovie();
     }
-
-
-    else if (usersearchchoice == 3) {
-
-        cout << "Search...";
-        string usergenre;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, usergenre);
-
-        vector<SearchResult> result = GrandMallCinema.SearchShowbygenre(usergenre);
-        if (result.empty()) {
-            cout << "Not found." << endl;
-        }
-
-        else {
-            cout << "\nFound shows:" << endl;
-            for (int i = 0; i < result.size(); i++) {
-                result[i].show->printMovieInfo();
-
-                cout << endl;
-            }
-        }
-
-    }
-
-    else if (usersearchchoice == 4) {
-
-
-        cout << "Search...";
-        string userreleasedate;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, userreleasedate);
-
-        vector<SearchResult> result = GrandMallCinema.SearchShowbyreleasedate(userreleasedate);
-        if (result.empty()) {
-            cout << "Not found." << endl;
-        }
-
-        else {
-            cout << "\nFound shows:" << endl;
-            for (int i = 0; i < result.size(); i++) {
-                result[i].show->printMovieInfo();
-
-                cout << endl;
-            }
-        }
-    }
-
     else {
-        cout << "Choose another search method" << endl;
+        cout << "Try again." << endl;
     }
-
+    GrandMallCinema.printallshowsInHalls();
 }
   
        
