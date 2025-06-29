@@ -1,6 +1,6 @@
 #include "../include/admin.h"
 
-bool Admin::login() {
+bool Admin::login() { // Method to perform admin login authentication
     string username, password;
     cout << "Enter admin username: ";
     cin >> username;

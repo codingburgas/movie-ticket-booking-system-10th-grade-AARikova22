@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Prints all non-deleted shows in the current hall
 void Hall::printallshows() {
 	cout << "All Shows at Hall No." << HallNumber << endl;
 	for (int i = 0; i < shows.size(); i++) {

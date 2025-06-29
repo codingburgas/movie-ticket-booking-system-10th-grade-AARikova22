@@ -7,19 +7,21 @@
 
 using namespace std;
 
-void Cinema::printallshowsInHalls() {
+void Cinema::printallshowsInHalls() { // Prints all shows in each cinema hall
     cout << "All halls: " << endl;
     for (int i = 0; i < halls.size(); i++) {
         cout << halls[i].HallNumber << ":" << endl;
-        halls[i].printallshows();
+        halls[i].printallshows(); 
         cout << endl;
     }
 }
 
+// General structure: Searches for shows by title, language, genre, or release date.
+// Each function converts input and stored data to lowercase for case-insensitive comparison.
 vector<SearchResult> Cinema::SearchShowbytitle(string usertitle) {
     vector<SearchResult> result;
     string lower_usertitle = usertitle;
-    for (char& c : lower_usertitle) {
+    for (char& c : lower_usertitle) { //Converts input to lowercase
         c = tolower(c);
     }
 
@@ -126,11 +128,13 @@ vector <SearchResult> Cinema::SearchShowbyreleasedate(string userreleasedate) {
     return result;
 }
 
+
+// Adds a new movie to the cinema's movie list
 void Cinema::addMovie() {
     
     Movie newMovie;
     cout << "\n--- Adding a new movie ---\n";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears the input buffer to ignore leftover characters (e.g., newline) before getline()
     cout << "Enter movie title: ";
     getline(cin, newMovie.title);
     cout << "Enter language: ";
@@ -139,12 +143,12 @@ void Cinema::addMovie() {
     getline(cin, newMovie.genre);
     cout << "Enter release date: ";
     getline(cin, newMovie.releasedate);
-    movies.push_back(newMovie);
+    movies.push_back(newMovie);  // Add the movie to the movies vector
     cout << "\nSuccess! Movie '" << newMovie.title << "' has been added to the database.\n";
 
 }
 
-void Cinema::deleteMovie() {
+void Cinema::deleteMovie() { // Deletes a movie by marking its title as "_DELETED_" and removing all its shows
     cout << "\n--- Deleting a movie ---\n";
 
     vector<int> movie_map;
@@ -178,7 +182,7 @@ void Cinema::deleteMovie() {
         for (int i = 0; i < halls.size(); i++) {
             for (int j = halls[i].shows.size() - 1; j >= 0; j--) {
                 if (halls[i].shows[j].movie == movieToDeletePtr) {
-                    halls[i].shows.erase(halls[i].shows.begin() + j);
+                    halls[i].shows.erase(halls[i].shows.begin() + j); // Remove associated shows from all halls
                 }
             }
         }
@@ -192,7 +196,7 @@ void Cinema::deleteMovie() {
 }
 
 
-
+// Adds a new show to a selected hall for a selected movie
 void Cinema::addShow() {
     cout << "\n--- Adding a new show ---\n";
 
@@ -235,7 +239,7 @@ void Cinema::addShow() {
     if (hallIndex >= 0 && hallIndex < halls.size()) {
         string time;
         cout << "\nEnter the show time (e.g., 19:30): ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears the input buffer to ignore leftover characters (e.g., newline) before getline()
         getline(cin, time);
 
         Show newShow;
@@ -266,42 +270,57 @@ void Cinema::addShow() {
     }
 }
 
+// Deletes a show based on user selection
 void Cinema::deleteShow() {
-   
-  
-        int showCounter = 1;
-        for (int i = 0; i < halls.size(); i++) {
-            for (int j = 0; j < halls[i].shows.size(); j++) {
-                cout << showCounter << ". Hall " << halls[i].HallNumber << halls[i].shows[j].time
-                    << halls[i].shows[j].movie->title << endl;
+    cout << "\n--- Deleting a show ---\n";
+    cout << "Which show do you want to delete? (enter the number)\n";
+
+    int showCounter = 1;
+    for (int i = 0; i < halls.size(); i++) {
+        for (int j = 0; j < halls[i].shows.size(); j++) {
+            if (halls[i].shows[j].movie->title != "_DELETED_") {
+                cout << showCounter << ". Hall " << halls[i].HallNumber
+                    << " | " << halls[i].shows[j].time
+                    << " | " << halls[i].shows[j].movie->title << endl;
                 showCounter++;
             }
         }
-        if (showCounter == 1) {
-            cout << "Show list is empty." << endl;
-            return;
-        }
-        cout << "Type the number of show you want to delete" << endl;
-        int deleteshowchoice;
-        cin >> deleteshowchoice;
-        int findCounter = 1;
-        
-        for (int i = 0; i < halls.size(); i++) {
-            for (int j = 0; j < halls[i].shows.size(); j++) {
-                if (findCounter == deleteshowchoice) {
-                    halls[i].shows.erase(halls[i].shows.begin() + j);
-                    cout << "Show deleted";
+    }
+
+    if (showCounter == 1) {
+        cout << "There are no shows to delete.\n";
+        return;
+    }
+
+    cout << "Your choice: ";
+    int userChoice;
+    cin >> userChoice;
+
+    int findCounter = 1;
+    bool showFoundAndDeleted = false;
+    for (int i = 0; i < halls.size(); i++) {
+        for (int j = 0; j < halls[i].shows.size(); j++) {
+            if (halls[i].shows[j].movie->title != "_DELETED_") {
+                if (findCounter == userChoice) {
+                    halls[i].shows.erase(halls[i].shows.begin() + j); // Find and delete the show from the appropriate hall
+                    cout << "\nShow successfully deleted.\n";
+                    showFoundAndDeleted = true;
                     break;
                 }
+                findCounter++;
             }
-           
+        }
+        if (showFoundAndDeleted) {
+            break;
+        }
+    }
 
-            for (int i = 0; i < halls.size(); i++) {
-                halls[i].shows.erase(halls[i].shows.begin() + deleteshowchoice);
-            }
-    
-}}
+    if (!showFoundAndDeleted) {
+        cout << "Error! A show with that number does not exist.\n";
+    }
+}
 
+// Updates the time of a selected show
 void Cinema::updateShow() {
     cout << "\n--- Updating show information ---\n";
     cout << "Which show do you want to update? (enter the number)\n";

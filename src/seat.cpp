@@ -4,6 +4,10 @@
 #include "../include/seat.h"
 using namespace std;
 
+
+// Attempts to reserve the seat
+// Returns true if the seat was successfully reserved
+// Returns false if the seat was already reserved
 bool Seat::isreserved() {
 	if (isReserved == true) {
 		return false;
