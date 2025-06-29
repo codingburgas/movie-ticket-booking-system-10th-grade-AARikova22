@@ -133,6 +133,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\seat.cpp" />
     <ClCompile Include="src\show.cpp" />
+    <ClCompile Include="src\user_interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\admin.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="include\movie.h" />
     <ClInclude Include="include\seat.h" />
     <ClInclude Include="include\show.h" />
+    <ClInclude Include="include\user_interface.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
