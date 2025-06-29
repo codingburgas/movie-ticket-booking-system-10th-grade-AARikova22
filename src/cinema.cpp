@@ -191,73 +191,75 @@ void Cinema::deleteMovie() {
 
 
 void Cinema::addShow() {
-    
-    if (movies.empty()) {
-        cout << "Movie list is empty. Add a movie first.\n";
-        return; 
-    }
-    if (halls.empty()) {
-        cout << "Hall list is empty. Add a hall first.\n";
-        return; 
+    cout << "\n--- Adding a new show ---\n";
+
+    cout << "Which movie is this show for? (enter the number)\n";
+
+    vector<int> movie_map;
+    int display_counter = 1;
+    for (int i = 0; i < movies.size(); ++i) {
+        if (movies[i].title != "_DELETED_") {
+            cout << display_counter << ". " << movies[i].title << endl;
+            movie_map.push_back(i);
+            display_counter++;
+        }
     }
 
-    cout << "\n--- Select a movie for the new show ---\n";
-    for (int i = 0; i < movies.size(); i++) {
-        cout << i + 1 << ". " << movies[i].title << endl;
+    if (movie_map.empty()) {
+        cout << "Cannot add a show. The movie database is empty.\n";
+        return;
     }
+
     cout << "Your choice: ";
-    int movie_choice;
-    cin >> movie_choice;
-    int movieIndex = movie_choice - 1; 
+    int movieChoice;
+    cin >> movieChoice;
 
-    
-    cout << "\n--- Select a hall ---\n";
-    for (int i = 0; i < halls.size(); i++) {
+    if (movieChoice <= 0 || movieChoice > movie_map.size()) {
+        cout << "Error! Invalid movie number.\n";
+        return;
+    }
+    int movieIndex = movie_map[movieChoice - 1]; 
+
+    cout << "\nWhich hall will the show be in? (enter the number)\n";
+    for (int i = 0; i < halls.size(); ++i) {
         cout << i + 1 << ". Hall " << halls[i].HallNumber << endl;
     }
     cout << "Your choice: ";
-    int hall_choice;
-    cin >> hall_choice;
-    int hallIndex = hall_choice - 1; 
+    int hallChoice;
+    cin >> hallChoice;
+    int hallIndex = hallChoice - 1;
 
-   
-    if (movieIndex >= 0 && movieIndex < movies.size() && hallIndex >= 0 && hallIndex < halls.size()) {
-
-        
-        cout << "\nType the time for the show (e.g., 19:30): ";
-        string newShowTime;
-        
+    if (hallIndex >= 0 && hallIndex < halls.size()) {
+        string time;
+        cout << "\nEnter the show time (e.g., 19:30): ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, newShowTime);
+        getline(cin, time);
 
-      
         Show newShow;
         newShow.movie = &movies[movieIndex];
-        newShow.time = newShowTime;
-
+        newShow.time = time;
         Hall& selectedHall = halls[hallIndex];
 
-        
-        for (int i = 0; i < selectedHall.silverCount; ++i) {
-            newShow.seats.push_back({ "silver", false });
-        }
-        
-        for (int i = 0; i < selectedHall.goldCount; ++i) {
-            newShow.seats.push_back({ "gold", false });
-        }
-        
-        for (int i = 0; i < selectedHall.platinumCount; ++i) {
-            newShow.seats.push_back({ "platinum", false });
-        }
+        const double silver_price = 10.00;
+        const double gold_price = 15.00;
+        const double platinum_price = 20.00;
 
        
-        halls[hallIndex].shows.push_back(newShow);
+        for (int i = 0; i < selectedHall.silverSeatsCount; ++i) {
+            newShow.seats.push_back({ "silver", silver_price, false });
+        }
+        for (int i = 0; i < selectedHall.goldSeatsCount; ++i) {
+            newShow.seats.push_back({ "gold", gold_price, false });
+        }
+        for (int i = 0; i < selectedHall.platinumSeatsCount; ++i) {
+            newShow.seats.push_back({ "platinum", platinum_price, false });
+        }
 
-        cout << "\nNew show for '" << newShow.movie->title << "' successfully added!\n";
+        halls[hallIndex].shows.push_back(newShow);
+        cout << "\nSuccess! The show for '" << movies[movieIndex].title << "' at " << time << " has been added." << endl;
     }
     else {
-        
-        cout << "\nError! Invalid movie or hall number.\n";
+        cout << "Error! Invalid hall number.\n";
     }
 }
 
