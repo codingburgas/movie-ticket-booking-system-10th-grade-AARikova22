@@ -300,53 +300,54 @@ void Cinema::deleteShow() {
 }}
 
 void Cinema::updateShow() {
-    if (shows.empty() == true) {
-        cout << "Show list is empty." << endl;
+    cout << "\n--- Updating show information ---\n";
+    cout << "Which show do you want to update? (enter the number)\n";
 
-    }
-    else {
-        for (int i = 0; i < shows.size(); i++) {
-            cout << i + 1 << ". " << shows[i].movie->title << endl;
-        }
-
-        cout << "Type the number of show you want to delete" << endl;
-        int uptadeshowindex;
-        cin >> uptadeshowindex;
-
-        cout << "Update..." << "1. Movie" << endl << "2. Time" << endl;
-        int updateshowchoice;
-        cin >> updateshowchoice;
-
-        if (updateshowchoice == 1) {
-            if (movies.empty() == true) {
-                cout << "Movie list is empty." << endl;
-
+    int showCounter = 1;
+    for (int i = 0; i < halls.size(); i++) {
+        for (int j = 0; j < halls[i].shows.size(); j++) {
+            if (halls[i].shows[j].movie->title != "_DELETED_") {
+                cout << showCounter << ". Hall " << halls[i].HallNumber
+                    << " | " << halls[i].shows[j].time
+                    << " | " << halls[i].shows[j].movie->title << endl;
+                showCounter++;
             }
-            else {
-                for (int i = 0; i < movies.size(); i++) {
-                    cout << i + 1 << ". " << movies[i].title << endl;
+        }
+    }
+
+    if (showCounter == 1) {
+        cout << "There are no shows to update.\n";
+        return;
+    }
+
+    cout << "Your choice: ";
+    int userChoice;
+    cin >> userChoice;
+
+    int findCounter = 1;
+    bool showFound = false;
+    
+    for (int i = 0; i < halls.size(); i++) {
+        for (int j = 0; j < halls[i].shows.size(); j++) {
+            if (halls[i].shows[j].movie->title != "_DELETED_") {
+                if (findCounter == userChoice) {
+                    showFound = true;
+                    
+                    cout << "\nEnter the new time for the show: ";
+                    string newTime;
+                    cin >> newTime;
+                    halls[i].shows[j].time = newTime;
+                    cout << "\nShow time has been updated!\n";
+                    break;
                 }
-                cout << "Type the number of movie you want to add" << endl;
-                int updatemovieindex;
-                cin >> updatemovieindex;
-                shows[uptadeshowindex].movie = &movies[updatemovieindex];
-                cout << "Movie successfully updated!" << endl;
+                findCounter++;
             }
-
-
-
-
         }
-        else if (updateshowchoice == 2) {
-            cout << "Enter new time." << endl;
-            string NewTime;
-            getline(cin, NewTime);
-            shows[uptadeshowindex].time = NewTime;
-            cout << "Show time successfully updated!" << endl;
-
-        }
-        else {
-            cout << "Try again.";
-
+        if (showFound) {
+            break;
         }
     }
+    if (!showFound) {
+        cout << "Error! A show with that number does not exist.\n";
+    }
+}

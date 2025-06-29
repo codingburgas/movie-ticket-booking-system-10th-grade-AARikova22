@@ -9,7 +9,7 @@ struct Hall {
 	int HallNumber;
 	vector<Show> shows;
 	void printallshows();
-	int  silverCount;
-	int goldCount;
-	int platinumCount;
+	int  silverSeatsCount;
+	int goldSeatsCount;
+	int platinumSeatsCount;
 };
