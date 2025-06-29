@@ -134,6 +134,7 @@
     <ClCompile Include="src\show.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\admin.h" />
     <ClInclude Include="include\cinema.h" />
     <ClInclude Include="include\hall.h" />
     <ClInclude Include="include\movie.h" />

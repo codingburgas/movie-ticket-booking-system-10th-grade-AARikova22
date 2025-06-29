@@ -46,14 +46,23 @@ int main() {
     Hall hall1;
     hall1.HallNumber = 1;
     hall1.shows = { runlolarun,nowyouseeme };
+    hall1.silverCount = 20;
+    hall1.goldCount = 10;
+    hall1.platinumCount = 5;
 
     Hall hall2;
     hall2.HallNumber = 2;
     hall2.shows = { whatwedointheshadows, thebookofgenry };
+    hall2.silverCount = 20;
+    hall2.goldCount = 10;
+    hall2.platinumCount = 5;
 
     Hall hall3;
     hall3.HallNumber = 3;
     hall3.shows = { labyrinth, coraline };
+    hall3.silverCount = 20;
+    hall3.goldCount = 10;
+    hall3.platinumCount = 5;
 
     Cinema GrandMallCinema;
     GrandMallCinema.name = "Grand Mall Cinema";
