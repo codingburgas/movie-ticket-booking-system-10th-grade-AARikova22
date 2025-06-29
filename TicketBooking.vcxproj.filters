@@ -30,6 +30,9 @@
     <ClCompile Include="src\cinema.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\admin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\show.h">

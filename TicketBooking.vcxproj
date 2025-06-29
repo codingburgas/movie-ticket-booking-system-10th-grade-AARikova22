@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\admin.cpp" />
     <ClCompile Include="src\cinema.cpp" />
     <ClCompile Include="src\hall.cpp" />
     <ClCompile Include="src\main.cpp" />
