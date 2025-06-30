@@ -10,7 +10,7 @@ using namespace std;
 void Cinema::printallshowsInHalls() { // Prints all shows in each cinema hall
     cout << "All halls: " << endl;
     for (int i = 0; i < halls.size(); i++) {
-        cout << halls[i].HallNumber << ":" << endl;
+        
         halls[i].printallshows(); 
         cout << endl;
     }
