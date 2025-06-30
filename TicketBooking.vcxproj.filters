@@ -64,5 +64,7 @@
     <None Include=".gitignore" />
     <None Include=".gitattributes" />
     <None Include="README.md" />
+    <None Include="docs\CinemaBookingSystem.docx" />
+    <None Include="docs\QA Documentation (1).docx" />
   </ItemGroup>
 </Project>
