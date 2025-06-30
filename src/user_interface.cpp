@@ -4,9 +4,9 @@
 #include <limits>
 #include <iomanip>
 #include <cctype>
+#include <numeric>
 #include "../include/user_interface.h"
 using namespace std;
-
 
 void adminMenu(Cinema& cinema) {
     int choice;
@@ -40,23 +40,17 @@ void adminMenu(Cinema& cinema) {
     } while (choice != 0);
 }
 
-void userMenu(Cinema& cinema) {
-    string title;
-    cout << "\n--- Search for a Show ---" << endl;
-    cout << "Enter the title of the movie you are looking for: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    getline(cin, title);
 
-    vector<SearchResult> results = cinema.SearchShowbytitle(title);
-
+void displayResultsAndBook(Cinema& cinema, vector<SearchResult>& results) {
     if (results.empty()) {
-        cout << "Sorry, no shows found for the movie '" << title << "'." << endl;
+        cout << "Sorry, no shows found for your criteria." << endl;
         return;
     }
 
-    cout << "\nFound shows for '" << title << "':" << endl;
+    cout << "\nFound shows:" << endl;
     for (int i = 0; i < results.size(); ++i) {
-        cout << i + 1 << ". Hall " << results[i].hallNumber
+        cout << i + 1 << ". " << results[i].show->movie->title
+            << " | Hall: " << results[i].hallNumber
             << " | Time: " << results[i].show->time << endl;
     }
 
@@ -66,81 +60,160 @@ void userMenu(Cinema& cinema) {
 
     if (choice > 0 && choice <= results.size()) {
         SearchResult selectedResult = results[choice - 1];
-        Show* selectedShow = selectedResult.show;
-
-        cout << "\nYou have selected the show at " << selectedShow->time << "." << endl;
-        selectedShow->printSeatsInfo();
-
-        cout << "\nEnter the seat number to book: ";
-        int seatNumber;
-        cin >> seatNumber;
-
-        if (seatNumber > 0 && seatNumber <= selectedShow->seats.size()) {
-            if (selectedShow->seatReservation(seatNumber - 1)) {
-
-                cout << "\nCongratulations! You have successfully reserved seat " << seatNumber << "." << endl;
-
-                cout << "\nPlease choose your payment method:" << endl;
-                cout << "1. Pay Online (Credit Card)" << endl;
-                cout << "2. Pay at the Cinema" << endl;
-                cout << "Your choice: ";
-                int paymentChoice;
-                cin >> paymentChoice;
-
-                switch (paymentChoice) {
-                case 1: {
-                    cout << "\n--- Online Payment ---" << endl;
-                    string cardNumber;
-                    cout << "Please enter your 16-digit card number (without spaces): ";
-                    cin >> cardNumber;
-
-                    bool isValid = cardNumber.length() == 16;
-                    if (isValid) {
-                        for (char const& c : cardNumber) {
-                            if (isdigit(c) == 0) {
-                                isValid = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (isValid) {
-                        cout << "\nValidating card... Processing payment..." << endl;
-                        cout << "Payment successful! Your booking is confirmed." << endl;
-
-                        printTicket(cinema, selectedResult, seatNumber);
-                    }
-                    else {
-                        cout << "\nError: Invalid card number." << endl;
-                        cout << "Your reservation is on hold. Please finalize your payment at the cinema." << endl;
-                    }
-                    break;
-                }
-                case 2: {
-                    cout << "\n--- Pay at the Cinema ---" << endl;
-                    cout << "Your booking is confirmed." << endl;
-                    cout << "Please make sure to pay and pick up your ticket at the box office." << endl;
-
-                    printTicket(cinema, selectedResult, seatNumber);
-                    break;
-                }
-                default: {
-                    cout << "\nInvalid payment option selected. Reservation cancelled." << endl;
-                    break;
-                }
-                }
-
-            }
-            else {
-                cout << "\nError! This seat is already taken. Please try again." << endl;
-            }
-        }
-        else {
-            cout << "\nError! This seat does not exist. Please try again." << endl;
-        }
+        processBooking(cinema, selectedResult);
     }
 }
 
+void searchMenu(Cinema& cinema) {
+    int choice;
+    cout << "\n--- Search for a show ---" << endl;
+    cout << "1. Search by Title" << endl;
+    cout << "2. Search by Genre" << endl;
+    cout << "3. Search by Language" << endl;
+    cout << "4. Search by Release Year" << endl;
+    cout << "0. Back to Main Menu" << endl;
+    cout << "Your choice: ";
+    cin >> choice;
+
+    string query;
+    vector<SearchResult> results;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    switch (choice) {
+    case 1:
+        cout << "Enter movie title: ";
+        getline(cin, query);
+        results = cinema.SearchShow(query);
+        break;
+    case 2:
+        cout << "Enter genre: ";
+        getline(cin, query);
+        results = cinema.SearchShowbygenre(query);
+        break;
+    case 3:
+        cout << "Enter language: ";
+        getline(cin, query);
+        results = cinema.SearchShowbylanguage(query);
+        break;
+    case 4:
+        cout << "Enter release year: ";
+        getline(cin, query);
+        results = cinema.SearchShowbyreleasedate(query);
+        break;
+    case 0:
+        return;
+    default:
+        cout << "Invalid choice. Please try again." << endl;
+        return;
+    }
+
+    displayResultsAndBook(cinema, results);
+}
+
+
+void processBooking(Cinema& cinema, SearchResult& selectedResult) {
+    Show* selectedShow = selectedResult.show;
+
+    cout << "\nYou have selected the show: " << selectedShow->movie->title
+        << " at " << selectedShow->time << "." << endl;
+
+    selectedShow->printSeatsInfo();
+
+    int numToBook;
+    cout << "\nHow many seats would you like to book? ";
+    cin >> numToBook;
+
+    if (numToBook <= 0) {
+        cout << "Invalid number of seats." << endl;
+        return;
+    }
+
+    vector<int> selectedSeats; 
+    vector<int> seatIndices;   
+    cout << "Please enter the seat numbers one by one:" << endl;
+    for (int i = 0; i < numToBook; ++i) {
+        int seatNum;
+        cout << "Seat " << i + 1 << ": ";
+        cin >> seatNum;
+        selectedSeats.push_back(seatNum);
+        seatIndices.push_back(seatNum - 1); 
+    }
+
+    bool allSeatsAreValid = true;
+    double totalPrice = 0.0;
+
+    for (int index : seatIndices) {
+        if (index < 0 || index >= selectedShow->seats.size() || selectedShow->seats[index].isReserved) {
+            cout << "Error: Seat " << index + 1 << " is invalid or already taken." << endl;
+            allSeatsAreValid = false;
+            break;
+        }
+    }
+
+    if (allSeatsAreValid) {
+        for (int index : seatIndices) {
+            selectedShow->seatReservation(index);
+            totalPrice += selectedShow->seats[index].price;
+        }
+
+        cout << "\nCongratulations! You have successfully reserved " << numToBook << " seat(s)." << endl;
+        cout << "Total price: " << fixed << setprecision(2) << totalPrice << " USD." << endl;
+
+        cout << "\nPlease choose your payment method:" << endl;
+        cout << "1. Pay Online (Credit Card)" << endl;
+        cout << "2. Pay at the Cinema" << endl;
+        cout << "Your choice: ";
+        int paymentChoice;
+        cin >> paymentChoice;
+
+        auto printAllTickets = [&]() {
+            cout << "\n\nPrinting your ticket(s)...";
+            for (int seatNum : selectedSeats) {
+                printTicket(cinema, selectedResult, seatNum);
+            }
+            cout << "\n";
+            };
+
+        switch (paymentChoice) {
+        case 1: {
+            cout << "\n--- Online Payment ---" << endl;
+            string cardNumber;
+            cout << "Please enter your 16-digit card number (without spaces): ";
+            cin >> cardNumber;
+
+            bool isValid = cardNumber.length() == 16 && all_of(cardNumber.begin(), cardNumber.end(), ::isdigit);
+            if (isValid) {
+                cout << "\nPayment successful! Your booking is confirmed." << endl;
+                printAllTickets();
+                cout << "[NOTIFICATION] A new booking for " << numToBook << " ticket(s) has been made for '" << selectedShow->movie->title << "'." << endl;
+            }
+            else {
+                cout << "\nError: Invalid card number." << endl;
+                cout << "[NOTIFICATION] Booking for '" << selectedShow->movie->title << "' was cancelled." << endl;
+                for (int index : seatIndices) selectedShow->unreserveSeat(index);
+            }
+            break;
+        }
+        case 2: {
+            cout << "\n--- Pay at the Cinema ---" << endl;
+            cout << "Your booking is confirmed." << endl;
+            printAllTickets();
+            cout << "[NOTIFICATION] A new booking for " << numToBook << " ticket(s) has been made for '" << selectedShow->movie->title << "'." << endl;
+            break;
+        }
+        default: {
+            cout << "\nInvalid payment option selected. Reservation cancelled." << endl;
+            cout << "[NOTIFICATION] Booking for '" << selectedShow->movie->title << "' was cancelled." << endl;
+            for (int index : seatIndices) selectedShow->unreserveSeat(index);
+            break;
+        }
+        }
+    }
+    else {
+        cout << "\nBooking failed. Please try again." << endl;
+    }
+}
 
 void printTicket(const Cinema& cinema, const SearchResult& searchResult, int seatNumber) {
     const Show* show = searchResult.show;
@@ -148,7 +221,7 @@ void printTicket(const Cinema& cinema, const SearchResult& searchResult, int sea
 
     cout << "\n\n***************************************************" << endl;
     cout << "* *" << endl;
-    cout << "* YOUR MOVIE TICKET                  *" << endl;
+    cout << "* YOUR MOVIE TICKET                    *" << endl;
     cout << "* *" << endl;
     cout << "***************************************************" << endl;
     cout << "  CINEMA: " << cinema.name << ", " << cinema.town << endl;
@@ -160,6 +233,6 @@ void printTicket(const Cinema& cinema, const SearchResult& searchResult, int sea
     cout << "  SEAT:   " << seatNumber << " (" << seat.seattype << ")" << endl;
     cout << "  PRICE:  " << fixed << setprecision(2) << seat.price << " USD" << endl;
     cout << "***************************************************" << endl;
-    cout << "* ENJOY THE SHOW!                     *" << endl;
-    cout << "***************************************************\n\n" << endl;
+    cout << "* ENJOY THE SHOW!                   *" << endl;
+    cout << "***************************************************";
 }

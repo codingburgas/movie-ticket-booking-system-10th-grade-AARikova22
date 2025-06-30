@@ -18,10 +18,10 @@ void Cinema::printallshowsInHalls() { // Prints all shows in each cinema hall
 
 // General structure: Searches for shows by title, language, genre, or release date.
 // Each function converts input and stored data to lowercase for case-insensitive comparison.
-vector<SearchResult> Cinema::SearchShowbytitle(string usertitle) {
+vector<SearchResult> Cinema::SearchShow(string usertitle) {
     vector<SearchResult> result;
     string lower_usertitle = usertitle;
-    for (char& c : lower_usertitle) { //Converts input to lowercase
+    for (char& c : lower_usertitle) {
         c = tolower(c);
     }
 
