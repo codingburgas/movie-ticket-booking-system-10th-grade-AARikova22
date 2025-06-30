@@ -19,7 +19,7 @@ bool Seat::isreserved() {
 }
 void Seat::printseatinfo() {
 	cout << "Seat type: " << seattype
-		<< " | Price: " << fixed << setprecision(2) << price << " USD"
+		<< " | Price: " << fixed << setprecision(2) << price << " BGN"
 		<< " | Status: ";
 	if (isReserved == true) {
 		cout << "reserved";

@@ -28,28 +28,28 @@ int main() {
     GrandMallCinema.movies.push_back({ "What We Do In The Shadows", "English", "Comedy", "2014" });
     GrandMallCinema.movies.push_back({ "Labyrinth", "Bulgarian", "Fantasy", "1986" });
 
-    
+
     Hall hall1;
     hall1.HallNumber = 1;
-    hall1.silverSeatsCount = 5; 
+    hall1.silverSeatsCount = 5;
     hall1.goldSeatsCount = 3;
     hall1.platinumSeatsCount = 2;
 
     Hall hall2;
     hall2.HallNumber = 2;
-    hall2.silverSeatsCount = 10; 
+    hall2.silverSeatsCount = 10;
     hall2.goldSeatsCount = 5;
     hall2.platinumSeatsCount = 3;
 
     Hall hall3;
     hall3.HallNumber = 3;
-    hall3.silverSeatsCount = 15; 
+    hall3.silverSeatsCount = 15;
     hall3.goldSeatsCount = 10;
     hall3.platinumSeatsCount = 5;
 
-    
 
-    
+
+
     Show runlolarun = { &GrandMallCinema.movies[7], "15:30" };
     for (int i = 0; i < hall1.silverSeatsCount; ++i) runlolarun.seats.push_back({ "silver", silver_price, false });
     for (int i = 0; i < hall1.goldSeatsCount; ++i) runlolarun.seats.push_back({ "gold", gold_price, false });
@@ -67,7 +67,7 @@ int main() {
 
     hall1.shows = { runlolarun, nowyouseeme, liloandstitch };
 
-    
+
     Show whatwedointheshadows = { &GrandMallCinema.movies[8], "17:30" };
     for (int i = 0; i < hall2.silverSeatsCount; ++i) whatwedointheshadows.seats.push_back({ "silver", silver_price, false });
     for (int i = 0; i < hall2.goldSeatsCount; ++i) whatwedointheshadows.seats.push_back({ "gold", gold_price, false });
@@ -85,7 +85,7 @@ int main() {
 
     hall2.shows = { whatwedointheshadows, thebookofgenry, beetlejuice };
 
-    
+
     Show labyrinth = { &GrandMallCinema.movies[9], "19:30" };
     for (int i = 0; i < hall3.silverSeatsCount; ++i) labyrinth.seats.push_back({ "silver", silver_price, false });
     for (int i = 0; i < hall3.goldSeatsCount; ++i) labyrinth.seats.push_back({ "gold", gold_price, false });
@@ -108,7 +108,7 @@ int main() {
 
     hall3.shows = { labyrinth, coraline, neverendingstory, secretwindow };
 
-    
+
     GrandMallCinema.halls = { hall1, hall2, hall3 };
 
     int choice;
@@ -125,7 +125,7 @@ int main() {
         cout << "  [1] View All Shows\n\n";
         cout << "  [2] Search and Book a Movie Ticket\n\n";
         cout << "  [3] Admin Login\n\n";
-        cout << "  [4] Exit Application\n\n";
+        cout << "  [0] Exit Application\n\n";
         cout << "------------------------------------------------------------\n";
         cout << "               Enter your choice (1-4): ";
         cout << "\n------------------------------------------------------------\n";
@@ -138,6 +138,7 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cin >> choice;
         }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (choice) {
         case 1:

@@ -7,12 +7,14 @@
 #include "movie.h"
 using namespace std;
 
-struct SearchResult {
+class SearchResult {
+public:
 	Show* show;
 	int hallNumber;
 };
 
-struct Cinema {
+class Cinema {
+public:
 	string name;
 	string town;
 	vector <Hall> halls;

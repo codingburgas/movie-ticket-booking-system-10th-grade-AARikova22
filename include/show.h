@@ -6,7 +6,8 @@
 #include "movie.h"
 using namespace std;
 
-struct Show {
+class Show {
+public:
     Movie* movie;
     string time;
     vector<Seat> seats;

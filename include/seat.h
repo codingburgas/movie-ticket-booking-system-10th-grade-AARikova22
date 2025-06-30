@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 using namespace std;
-struct Seat {
+class Seat {
+public:
 	string seattype;
 	double price;
 	bool isReserved;

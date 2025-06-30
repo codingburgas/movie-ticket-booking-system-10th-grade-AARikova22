@@ -8,6 +8,7 @@
 #include "../include/user_interface.h"
 using namespace std;
 
+// Displays the admin menu and handles actions like add/delete/update
 void adminMenu(Cinema& cinema) {
     int choice;
     do {
@@ -40,7 +41,7 @@ void adminMenu(Cinema& cinema) {
     } while (choice != 0);
 }
 
-
+// Displays search menu and triggers appropriate search method
 void displayResultsAndBook(Cinema& cinema, vector<SearchResult>& results) {
     if (results.empty()) {
         cout << "Sorry, no shows found for your criteria." << endl;
@@ -111,7 +112,7 @@ void searchMenu(Cinema& cinema) {
     displayResultsAndBook(cinema, results);
 }
 
-
+// Handles the full booking process: seat selection, validation, payment, ticket printing
 void processBooking(Cinema& cinema, SearchResult& selectedResult) {
     Show* selectedShow = selectedResult.show;
 
@@ -215,6 +216,7 @@ void processBooking(Cinema& cinema, SearchResult& selectedResult) {
     }
 }
 
+// Prints a formatted ticket with movie, time, seat, and price
 void printTicket(const Cinema& cinema, const SearchResult& searchResult, int seatNumber) {
     const Show* show = searchResult.show;
     const Seat& seat = show->seats[seatNumber - 1];

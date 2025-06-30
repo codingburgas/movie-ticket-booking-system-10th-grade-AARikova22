@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 using namespace std;
-struct Movie {
+class Movie {
+public:
 	string title;
 	string language;
 	string genre;

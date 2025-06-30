@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <algorithm>
 #include <cctype>
 #include "../include/cinema.h"
@@ -6,6 +6,20 @@
 #include "../include/show.h"
 
 using namespace std;
+
+// Safely reads an integer from input with validation and error handling
+int getIntegerInput() {
+    int choice;
+    cin >> choice;
+    while (cin.fail()) {
+        cout << "Error. Please enter a valid number: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> choice;
+    }
+    return choice;
+}
+
 
 void Cinema::printallshowsInHalls() { // Prints all shows in each cinema hall
     cout << "All halls: " << endl;
@@ -131,10 +145,9 @@ vector <SearchResult> Cinema::SearchShowbyreleasedate(string userreleasedate) {
 
 // Adds a new movie to the cinema's movie list
 void Cinema::addMovie() {
-    
     Movie newMovie;
     cout << "\n--- Adding a new movie ---\n";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears the input buffer to ignore leftover characters (e.g., newline) before getline()
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
     cout << "Enter movie title: ";
     getline(cin, newMovie.title);
     cout << "Enter language: ";
@@ -143,12 +156,12 @@ void Cinema::addMovie() {
     getline(cin, newMovie.genre);
     cout << "Enter release date: ";
     getline(cin, newMovie.releasedate);
-    movies.push_back(newMovie);  // Add the movie to the movies vector
+    movies.push_back(newMovie);
     cout << "\nSuccess! Movie '" << newMovie.title << "' has been added to the database.\n";
-
+    cout << "\n[NOTIFICATION] A new movie, '" << newMovie.title << "', has been released!" << endl;
 }
 
-void Cinema::deleteMovie() { // Deletes a movie by marking its title as "_DELETED_" and removing all its shows
+void Cinema::deleteMovie() {
     cout << "\n--- Deleting a movie ---\n";
 
     vector<int> movie_map;
@@ -168,12 +181,10 @@ void Cinema::deleteMovie() { // Deletes a movie by marking its title as "_DELETE
     }
 
     cout << "Your choice: ";
-    int choice;
-    cin >> choice;
+    int choice = getIntegerInput(); 
 
     if (choice > 0 && choice <= movie_map.size()) {
         int indexToDelete = movie_map[choice - 1];
-
         Movie* movieToDeletePtr = &movies[indexToDelete];
         string title = movieToDeletePtr->title;
 
@@ -182,10 +193,11 @@ void Cinema::deleteMovie() { // Deletes a movie by marking its title as "_DELETE
         for (int i = 0; i < halls.size(); i++) {
             for (int j = halls[i].shows.size() - 1; j >= 0; j--) {
                 if (halls[i].shows[j].movie == movieToDeletePtr) {
-                    halls[i].shows.erase(halls[i].shows.begin() + j); // Remove associated shows from all halls
+                    halls[i].shows.erase(halls[i].shows.begin() + j);
                 }
             }
         }
+
         movies[indexToDelete].title = "_DELETED_";
         cout << "\nDone! The movie '" << title << "' and all its shows have been deleted.\n";
 
@@ -201,7 +213,6 @@ void Cinema::addShow() {
     cout << "\n--- Adding a new show ---\n";
 
     cout << "Which movie is this show for? (enter the number)\n";
-
     vector<int> movie_map;
     int display_counter = 1;
     for (int i = 0; i < movies.size(); ++i) {
@@ -218,40 +229,38 @@ void Cinema::addShow() {
     }
 
     cout << "Your choice: ";
-    int movieChoice;
-    cin >> movieChoice;
+    int movieChoice = getIntegerInput(); 
 
     if (movieChoice <= 0 || movieChoice > movie_map.size()) {
         cout << "Error! Invalid movie number.\n";
         return;
     }
-    int movieIndex = movie_map[movieChoice - 1]; 
+    int movieIndex = movie_map[movieChoice - 1];
 
     cout << "\nWhich hall will the show be in? (enter the number)\n";
     for (int i = 0; i < halls.size(); ++i) {
         cout << i + 1 << ". Hall " << halls[i].HallNumber << endl;
     }
     cout << "Your choice: ";
-    int hallChoice;
-    cin >> hallChoice;
+    int hallChoice = getIntegerInput(); 
     int hallIndex = hallChoice - 1;
 
     if (hallIndex >= 0 && hallIndex < halls.size()) {
         string time;
         cout << "\nEnter the show time (e.g., 19:30): ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears the input buffer to ignore leftover characters (e.g., newline) before getline()
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, time);
 
         Show newShow;
         newShow.movie = &movies[movieIndex];
         newShow.time = time;
-        Hall& selectedHall = halls[hallIndex];
+        newShow.seats.clear();
 
+        Hall& selectedHall = halls[hallIndex];
         const double silver_price = 10.00;
         const double gold_price = 15.00;
         const double platinum_price = 20.00;
 
-       
         for (int i = 0; i < selectedHall.silverSeatsCount; ++i) {
             newShow.seats.push_back({ "silver", silver_price, false });
         }
@@ -263,7 +272,9 @@ void Cinema::addShow() {
         }
 
         halls[hallIndex].shows.push_back(newShow);
-        cout << "\nSuccess! The show for '" << movies[movieIndex].title << "' at " << time << " has been added." << endl;
+        cout << "\nSuccess! The show for '" << movies[movieIndex].title << "' at " << time
+            << " has been added. Total seats created: " << newShow.seats.size() << endl;
+
     }
     else {
         cout << "Error! Invalid hall number.\n";
@@ -293,8 +304,7 @@ void Cinema::deleteShow() {
     }
 
     cout << "Your choice: ";
-    int userChoice;
-    cin >> userChoice;
+    int userChoice = getIntegerInput();
 
     int findCounter = 1;
     bool showFoundAndDeleted = false;
@@ -302,7 +312,7 @@ void Cinema::deleteShow() {
         for (int j = 0; j < halls[i].shows.size(); j++) {
             if (halls[i].shows[j].movie->title != "_DELETED_") {
                 if (findCounter == userChoice) {
-                    halls[i].shows.erase(halls[i].shows.begin() + j); // Find and delete the show from the appropriate hall
+                    halls[i].shows.erase(halls[i].shows.begin() + j);
                     cout << "\nShow successfully deleted.\n";
                     showFoundAndDeleted = true;
                     break;
@@ -310,9 +320,7 @@ void Cinema::deleteShow() {
                 findCounter++;
             }
         }
-        if (showFoundAndDeleted) {
-            break;
-        }
+        if (showFoundAndDeleted) { break; }
     }
 
     if (!showFoundAndDeleted) {
@@ -343,21 +351,19 @@ void Cinema::updateShow() {
     }
 
     cout << "Your choice: ";
-    int userChoice;
-    cin >> userChoice;
+    int userChoice = getIntegerInput(); 
 
     int findCounter = 1;
     bool showFound = false;
-    
     for (int i = 0; i < halls.size(); i++) {
         for (int j = 0; j < halls[i].shows.size(); j++) {
             if (halls[i].shows[j].movie->title != "_DELETED_") {
                 if (findCounter == userChoice) {
                     showFound = true;
-                    
                     cout << "\nEnter the new time for the show: ";
                     string newTime;
-                    cin >> newTime;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, newTime);
                     halls[i].shows[j].time = newTime;
                     cout << "\nShow time has been updated!\n";
                     break;
@@ -365,9 +371,7 @@ void Cinema::updateShow() {
                 findCounter++;
             }
         }
-        if (showFound) {
-            break;
-        }
+        if (showFound) { break; }
     }
     if (!showFound) {
         cout << "Error! A show with that number does not exist.\n";
