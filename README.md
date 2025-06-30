@@ -1,10 +1,10 @@
-# ?? Cinema Booking System
+﻿# 🎬 Cinema Booking System
 
 A simple console-based C++ application for managing a cinema: movies, shows, and ticket bookings. Designed as a course project for System Programming or Object-Oriented Programming classes.
 
 ---
 
-## ?? Features
+## 📌 Features
 
 - View all available cinema halls and their shows
 - Search movies by title, genre, language, or release date
@@ -17,27 +17,24 @@ A simple console-based C++ application for managing a cinema: movies, shows, and
 
 ---
 
-## ?? Technologies Used
+## 🛠 Technologies Used
 
-- **Language:** C++17
-- **Concepts:** OOP, structures, vectors
-- **Compiler:** MSVC 
+- Language: C++17
+- Concepts: OOP, structures, vectors
+- Compiler: MSVC 
 
 ---
 
-### ? Prerequisites
+### ✅ Prerequisites
 
-- C++ compiler (e.g. `g++`, MSVC)
+- C++ compiler (e.g. g++, MSVC)
 - Terminal or command line interface
 
-### ?? Build Instructions
+### 🔧 Build Instructions
 
-1. Click the green **`Code`** button on the top right of the GitHub repository page.
-2. Select **"Open with Visual Studio"** *(if available)*  
-   � or �  
+1. Click the green `Code` button on the top right of the GitHub repository page.
+2. Select "Open with Visual Studio" *(if available)*  
+   – or –  
    Copy the repository URL.
-3. Open **Visual Studio** ? go to **File** ? **Clone Repository**.
+3. Open Visual Studio → go to File → Clone Repository.
 4. Paste the URL and choose a local folder to clone into.
-
-
-
