@@ -32,3 +32,9 @@ bool Show::seatReservation(int number) {
         return false;
     }
 }
+
+void Show::unreserveSeat(int number) {
+    if ((number >= 0) && (number < seats.size())) {
+        seats[number].isReserved = false;
+    }
+}

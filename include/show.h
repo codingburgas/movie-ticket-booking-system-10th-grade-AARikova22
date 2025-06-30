@@ -14,4 +14,6 @@ struct Show {
     void printMovieInfo();
     void printSeatsInfo();
     bool seatReservation(int number);
+    void unreserveSeat(int number);
+
 };
